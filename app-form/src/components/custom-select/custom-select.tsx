@@ -6,6 +6,7 @@ import {
   selectUniversityType,
 } from "../../state/selected-categories-slice/selected-categories-slice"
 import { useDispatch } from "react-redux"
+import "./style.css"
 
 interface CustomSelectProps {
   options: string[]
@@ -43,8 +44,9 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
       setSelectedOption("")
     }
   }, [isDisabled])
+
   return (
-    <div>
+    <div className="custom-select">
       <select
         value={selectedOption}
         onChange={handleChange}

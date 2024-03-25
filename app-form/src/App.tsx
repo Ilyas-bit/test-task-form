@@ -22,30 +22,37 @@ function App() {
   const universityTypeListState = useUniversityTypeListState()
   const accommodationPreferenceListState = useAccommodationPreferenceListState()
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    alert("Form submitted!")
+  }
+
   return (
-    <div className="App">
-      <CustomSelect
-        options={CountryListState}
-        type="country"
-        isDisabled={false}
-      />
-      <CustomSelect
-        options={citiesListState}
-        type="city"
-        isDisabled={isDisabledCitiesStates}
-      />
-      <CustomSelect
-        options={universityTypeListState}
-        type="universityType"
-        isDisabled={isDisabledUniversityTypeState}
-      />
-      <CustomSelect
-        options={accommodationPreferenceListState}
-        type="accommodationPreference"
-        isDisabled={isDisabledAccommodationPreferenceState}
-      />
-      <button disabled={isDisabledSubmitState}>Submit</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div className="App">
+        <CustomSelect
+          options={CountryListState}
+          type="country"
+          isDisabled={false}
+        />
+        <CustomSelect
+          options={citiesListState}
+          type="city"
+          isDisabled={isDisabledCitiesStates}
+        />
+        <CustomSelect
+          options={universityTypeListState}
+          type="universityType"
+          isDisabled={isDisabledUniversityTypeState}
+        />
+        <CustomSelect
+          options={accommodationPreferenceListState}
+          type="accommodationPreference"
+          isDisabled={isDisabledAccommodationPreferenceState}
+        />
+        <button disabled={isDisabledSubmitState}>Submit</button>
+      </div>
+    </form>
   )
 }
 

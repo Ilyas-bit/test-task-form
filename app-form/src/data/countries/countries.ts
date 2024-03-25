@@ -12,7 +12,7 @@ export const dataCountries = {
     ],
   },
   RU: {
-    cities: ["Москва", "Сочи"],
+    cities: ["Выберите город", "Москва", "Сочи"],
     accommodationOptions: [
       "Выберите вариант проживания",
       "Общежития",

@@ -1,0 +1,33 @@
+.custom-select {
+  position: relative;
+  display: inline-block;
+  width: 200px; /* Ширина селекта */
+}
+
+.custom-select select {
+  display: inline-block;
+  width: 100%;
+  padding: 10px; /* Отступы */
+  border: 1px solid #666; /* Обводка */
+  border-radius: 5px; /* Скругление углов */
+  background-color: #444; /* Темный цвет фона */
+  color: #fff; /* Белый цвет текста */
+  font-size: 16px; /* Размер шрифта */
+  cursor: pointer; /* Курсор при наведении */
+}
+
+/* Стили для опций */
+.custom-select select option {
+  padding: 10px; /* Отступы */
+}
+
+/* Стили для опций при наведении */
+.custom-select select option:hover {
+  background-color: #666; /* Цвет фона при наведении */
+}
+
+/* Стили для выбранного элемента */
+.custom-select select option:checked {
+  background-color: #007bff; /* Цвет фона выбранного элемента */
+  color: #fff; /* Белый цвет текста выбранного элемента */
+}
