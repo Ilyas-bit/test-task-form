@@ -13,7 +13,7 @@ const initialState: CountryState = {
   universityTypeListState: dataCountries.universityTypes,
   selectedAccommodationPreferenceState: "",
   isDisabledAccommodationPreferenceState: true,
-  accommodationPreferenceListState: dataCountries.DefaultaccommodationOptions,
+  accommodationPreferenceListState: dataCountries.DefaultAccommodationOptions,
   isDisabledSabmitState: true,
 }
 

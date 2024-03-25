@@ -2,7 +2,7 @@ export const dataCountries = {
   countryList: ["Выберите страну", "РБ", "РФ"],
   DefaultСiti: ["Выберите город"],
   universityTypes: ["Выберите вид ВУЗа", "Технический", "Гуманитарный"],
-  DefaultaccommodationOptions: ["Выберите вариант проживания"],
+  DefaultAccommodationOptions: ["Выберите вариант проживания"],
   BY: {
     cities: ["Выберите город", "Минск", "Гомель"],
     accommodationOptions: [
