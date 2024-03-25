@@ -1,32 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { dataCountries } from "../../data/countries/countries"
+import { CountryState } from "../../interface/selected-categories/selected-categories"
 
-interface State {
-  selectedCountryState: string
-  CountryListState: string[]
-  selectedCitiesState: string
-  isDisabledCitiesState: boolean
-  citiesListState: string[]
-  selectedUniversityTypeState: string
-  isDisabledUniversityTypeState: boolean
-  universityTypeListState: string[]
-  selectedAccommodationPreferenceState: string
-  isDisabledAccommodationPreferenceState: boolean
-  accommodationPreferenceListState: string[]
-  isDisabledSabmitState: boolean
-}
-
-const initialState: State = {
+const initialState: CountryState = {
   selectedCountryState: "",
-  CountryListState: ["Выберите страну", "РБ", "РФ"],
+  CountryListState: dataCountries.countryList,
   selectedCitiesState: "",
   isDisabledCitiesState: true,
-  citiesListState: ["Выберите город"],
+  citiesListState: dataCountries.DefaultСiti,
   selectedUniversityTypeState: "",
   isDisabledUniversityTypeState: true,
-  universityTypeListState: ["Выберите вид ВУЗа", "Технический", "Гуманитарный"],
+  universityTypeListState: dataCountries.universityTypes,
   selectedAccommodationPreferenceState: "",
   isDisabledAccommodationPreferenceState: true,
-  accommodationPreferenceListState: ["Выберите вариант проживания"],
+  accommodationPreferenceListState: dataCountries.DefaultaccommodationOptions,
   isDisabledSabmitState: true,
 }
 
@@ -39,23 +26,16 @@ const selectedCategoriesStateSlice = createSlice({
       if (action.payload === "РБ") {
         state.selectedCountryState = "РБ"
         state.isDisabledCitiesState = false
-        state.citiesListState = ["Выберите город", "Минск", "Гомель"]
-        state.accommodationPreferenceListState = [
-          "Выберите вариант проживания ",
-          "Общежития",
-          "Не интересует",
-        ]
+        state.citiesListState = dataCountries.BY.cities
+        state.accommodationPreferenceListState =
+          dataCountries.BY.accommodationOptions
       }
       if (action.payload === "РФ") {
         state.selectedCountryState = "РФ"
         state.isDisabledCitiesState = false
-        state.citiesListState = ["Москва", "Сочи"]
-        state.accommodationPreferenceListState = [
-          "Общежития",
-          "Аренда",
-          "Не интересует",
-          "Общежития + Аренда",
-        ]
+        state.citiesListState = dataCountries.RU.cities
+        state.accommodationPreferenceListState =
+          dataCountries.RU.accommodationOptions
       }
       if (action.payload === "Выберите страну") {
         state.isDisabledSabmitState = true
@@ -63,9 +43,8 @@ const selectedCategoriesStateSlice = createSlice({
         state.isDisabledUniversityTypeState = true
         state.isDisabledAccommodationPreferenceState = true
         state.selectedCitiesState = ""
-        state.selectedUniversityTypeState = "Выберите вид ВУЗа"
-        state.selectedAccommodationPreferenceState =
-          "Выберите вариант проживания "
+        state.selectedUniversityTypeState = ""
+        state.selectedAccommodationPreferenceState = ""
       }
     },
     selectCities: (state, action) => {
@@ -76,9 +55,8 @@ const selectedCategoriesStateSlice = createSlice({
         state.isDisabledUniversityTypeState = true
         state.isDisabledAccommodationPreferenceState = true
         state.selectedCitiesState = ""
-        state.selectedUniversityTypeState = "Выберите вид ВУЗа"
-        state.selectedAccommodationPreferenceState =
-          "Выберите вариант проживания "
+        state.selectedUniversityTypeState = ""
+        state.selectedAccommodationPreferenceState = ""
       }
     },
     selectUniversityType: (state, action) => {
@@ -87,8 +65,7 @@ const selectedCategoriesStateSlice = createSlice({
       if (action.payload === "Выберите вид ВУЗа") {
         state.isDisabledSabmitState = true
         state.isDisabledAccommodationPreferenceState = true
-        state.selectedAccommodationPreferenceState =
-          "Выберите вариант проживания "
+        state.selectedAccommodationPreferenceState = ""
       }
     },
     selectAccommodationPreference: (state, action) => {

@@ -1,19 +1,24 @@
-export const countries = [
-  {
-    name: "РБ",
-    cities: ["Минск", "Гомель"],
-    universityTypes: ["Технический", "Гуманитарный"],
-    accommodationOptions: ["Общежития", "Не интересует"],
-  },
-  {
-    name: "РФ",
-    cities: ["Москва", "Сочи"],
-    universityTypes: ["Технический", "Гуманитарный"],
+export const dataCountries = {
+  countryList: ["Выберите страну", "РБ", "РФ"],
+  DefaultСiti: ["Выберите город"],
+  universityTypes: ["Выберите вид ВУЗа", "Технический", "Гуманитарный"],
+  DefaultaccommodationOptions: ["Выберите вариант проживания"],
+  BY: {
+    cities: ["Выберите город", "Минск", "Гомель"],
     accommodationOptions: [
+      "Выберите вариант проживания",
+      "Общежития",
+      "Не интересует",
+    ],
+  },
+  RU: {
+    cities: ["Москва", "Сочи"],
+    accommodationOptions: [
+      "Выберите вариант проживания",
       "Общежития",
       "Аренда",
       "Не интересует",
       "Общежития + Аренда",
     ],
   },
-];
+}
