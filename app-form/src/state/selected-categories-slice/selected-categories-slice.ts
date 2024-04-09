@@ -3,18 +3,17 @@ import { dataCountries } from "../../data/countries/countries"
 import { CountryState } from "../../interface/selected-categories/selected-categories"
 
 const initialState: CountryState = {
-  selectedCountryState: "",
-  CountryListState: dataCountries.countryList,
-  selectedCitiesState: "",
-  isDisabledCitiesState: true,
-  citiesListState: dataCountries.DefaultСiti,
-  selectedUniversityTypeState: "",
-  isDisabledUniversityTypeState: true,
-  universityTypeListState: dataCountries.universityTypes,
-  selectedAccommodationPreferenceState: "",
-  isDisabledAccommodationPreferenceState: true,
-  accommodationPreferenceListState: dataCountries.DefaultAccommodationOptions,
-  isDisabledSabmitState: true,
+  selectedCountry: "выберите страну",
+  selectedCountries: ["выберите страну", "Беларусь", "Россия"],
+  selectedCities: ["выберите город"],
+  selectedCity: "выберите город",
+  isActiveCity: true,
+  universityTypes: ["выберите вид ВУЗа", "ВУЗ", "Не интересует"],
+  selectedUniversityType: "выберите вид ВУЗа",
+  isActiveUniversityType: true,
+  selectedAccommodationOptions: ["выберите вариант проживания"],
+  selectedAccommodationOption: "выберите вариант проживания",
+  isActiveAccommodationOption: true,
 }
 
 const selectedCategoriesStateSlice = createSlice({
@@ -23,63 +22,60 @@ const selectedCategoriesStateSlice = createSlice({
 
   reducers: {
     selectCountry: (state, action) => {
-      if (action.payload === "РБ") {
-        state.selectedCountryState = "РБ"
-        state.isDisabledCitiesState = false
-        state.citiesListState = dataCountries.BY.cities
-        state.accommodationPreferenceListState =
-          dataCountries.BY.accommodationOptions
-      }
-      if (action.payload === "РФ") {
-        state.selectedCountryState = "РФ"
-        state.isDisabledCitiesState = false
-        state.citiesListState = dataCountries.RU.cities
-        state.accommodationPreferenceListState =
-          dataCountries.RU.accommodationOptions
-      }
-      if (action.payload === "Выберите страну") {
-        state.isDisabledSabmitState = true
-        state.isDisabledCitiesState = true
-        state.isDisabledUniversityTypeState = true
-        state.isDisabledAccommodationPreferenceState = true
-        state.selectedCitiesState = ""
-        state.selectedUniversityTypeState = ""
-        state.selectedAccommodationPreferenceState = ""
+      const selectedCountryValue = action.payload
+      state.selectedCountry = selectedCountryValue
+
+      // Находим нужный объект
+      const selectedCountryObject = dataCountries.find(
+        (option) => option.country === selectedCountryValue
+      )
+
+      if (selectedCountryObject) {
+        state.selectedCities = selectedCountryObject.cities
+        state.selectedAccommodationOptions =
+          selectedCountryObject.accommodationOptions
+        state.universityTypes = selectedCountryObject.universityType
+        state.isActiveCity = false
+      } else {
+        state.isActiveCity = true
+        state.isActiveUniversityType = true
+        state.isActiveAccommodationOption = true
+        state.selectedCities = ["выберите город"]
+        state.universityTypes = ["выберите тип ВУЗа"]
+        state.selectedAccommodationOptions = ["выберите вариант проживания"]
       }
     },
-    selectCities: (state, action) => {
-      state.selectedCitiesState = action.payload
-      state.isDisabledUniversityTypeState = false
-      if (action.payload === "Выберите город") {
-        state.isDisabledSabmitState = true
-        state.isDisabledUniversityTypeState = true
-        state.isDisabledAccommodationPreferenceState = true
-        state.selectedCitiesState = ""
-        state.selectedUniversityTypeState = ""
-        state.selectedAccommodationPreferenceState = ""
+    selectCity: (state, action) => {
+      state.selectedCity = action.payload
+      state.universityTypes = dataCountries[0].universityType
+      state.selectedAccommodationOptions = dataCountries[0].accommodationOptions
+      state.isActiveUniversityType = false
+      if (state.selectedCity === "выберите город") {
+        state.universityTypes = ["выберите вид ВУЗа"]
+        state.selectedAccommodationOptions = ["выберите вариант проживания"]
+        state.isActiveUniversityType = true
+        state.isActiveAccommodationOption = true
       }
     },
     selectUniversityType: (state, action) => {
-      state.selectedUniversityTypeState = action.payload
-      state.isDisabledAccommodationPreferenceState = false
-      if (action.payload === "Выберите вид ВУЗа") {
-        state.isDisabledSabmitState = true
-        state.isDisabledAccommodationPreferenceState = true
-        state.selectedAccommodationPreferenceState = ""
+      state.selectedUniversityType = action.payload
+      state.selectedAccommodationOptions = dataCountries[0].accommodationOptions
+      state.isActiveAccommodationOption = false
+      if (state.selectedUniversityType === "выберите вид ВУЗа") {
+        state.selectedAccommodationOptions = ["выберите вариант проживания"]
+        state.isActiveAccommodationOption = true
       }
     },
     selectAccommodationPreference: (state, action) => {
-      state.selectedAccommodationPreferenceState = action.payload
-      if (action.payload !== "Выберите вариант проживания") {
-        state.isDisabledSabmitState = false
-      }
+      state.selectedAccommodationOption = action.payload
+      state.isActiveAccommodationOption = false
     },
   },
 })
 
 export const {
   selectCountry,
-  selectCities,
+  selectCity,
   selectUniversityType,
   selectAccommodationPreference,
 } = selectedCategoriesStateSlice.actions

@@ -1,47 +1,39 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../store"
 
-export const useIsDisabledSubmitState = () => {
+export const useCountriesList = () => {
+  return useSelector((state: RootState) => state.categories.selectedCountries)
+}
+export const useSelectedCountry = () => {
+  return useSelector((state: RootState) => state.categories.selectedCountry)
+}
+
+export const useCitiesList = () => {
+  return useSelector((state: RootState) => state.categories.selectedCities)
+}
+
+export const useIsActiveCity = () => {
+  return useSelector((state: RootState) => state.categories.isActiveCity)
+}
+
+export const useUniversityTypeList = () => {
+  return useSelector((state: RootState) => state.categories.universityTypes)
+}
+
+export const useIsActiveUniversityTypeList = () => {
   return useSelector(
-    (state: RootState) => state.categories.isDisabledSabmitState
+    (state: RootState) => state.categories.isActiveUniversityType
   )
 }
 
-export const useIsDisabledCitiesStates = () => {
+export const useAccommodationOptionList = () => {
   return useSelector(
-    (state: RootState) => state.categories.isDisabledCitiesState
+    (state: RootState) => state.categories.selectedAccommodationOptions
   )
 }
 
-export const useIsDisabledUniversityTypeState = () => {
+export const useIsActiveAccommodationOption = () => {
   return useSelector(
-    (state: RootState) => state.categories.isDisabledUniversityTypeState
-  )
-}
-
-export const useIsDisabledAccommodationPreferenceState = () => {
-  return useSelector(
-    (state: RootState) =>
-      state.categories.isDisabledAccommodationPreferenceState
-  )
-}
-
-export const useCountryListState = () => {
-  return useSelector((state: RootState) => state.categories.CountryListState)
-}
-
-export const useCitiesListState = () => {
-  return useSelector((state: RootState) => state.categories.citiesListState)
-}
-
-export const useUniversityTypeListState = () => {
-  return useSelector(
-    (state: RootState) => state.categories.universityTypeListState
-  )
-}
-
-export const useAccommodationPreferenceListState = () => {
-  return useSelector(
-    (state: RootState) => state.categories.accommodationPreferenceListState
+    (state: RootState) => state.categories.isActiveAccommodationOption
   )
 }

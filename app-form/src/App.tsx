@@ -1,56 +1,87 @@
 import "./App.css"
+import {
+  selectAccommodationPreference,
+  selectCity,
+  selectCountry,
+  selectUniversityType,
+} from "./state/selected-categories-slice/selected-categories-slice"
+import { useDispatch } from "react-redux"
+
 import { CustomSelect } from "./components/custom-select/custom-select"
 import {
-  useAccommodationPreferenceListState,
-  useCitiesListState,
-  useCountryListState,
-  useIsDisabledAccommodationPreferenceState,
-  useIsDisabledCitiesStates,
-  useIsDisabledSubmitState,
-  useIsDisabledUniversityTypeState,
-  useUniversityTypeListState,
+  useAccommodationOptionList,
+  useCitiesList,
+  useCountriesList,
+  useIsActiveAccommodationOption,
+  useIsActiveCity,
+  useIsActiveUniversityTypeList,
+  useUniversityTypeList,
 } from "./state/selected-categories-slice/selectors"
 
 function App() {
-  const isDisabledSubmitState = useIsDisabledSubmitState()
-  const isDisabledCitiesStates = useIsDisabledCitiesStates()
-  const isDisabledUniversityTypeState = useIsDisabledUniversityTypeState()
-  const isDisabledAccommodationPreferenceState =
-    useIsDisabledAccommodationPreferenceState()
-  const CountryListState = useCountryListState()
-  const citiesListState = useCitiesListState()
-  const universityTypeListState = useUniversityTypeListState()
-  const accommodationPreferenceListState = useAccommodationPreferenceListState()
+  const dispatch = useDispatch()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     alert("Form submitted!")
   }
 
+  const countriesList = useCountriesList()
+  const CitiesList = useCitiesList()
+  const isDisabledCity = useIsActiveCity()
+
+  const universityTypeList = useUniversityTypeList()
+  const isDisabledUniversityType = useIsActiveUniversityTypeList()
+
+  const accommodationOptionList = useAccommodationOptionList()
+  const isActiveAccommodationOption = useIsActiveAccommodationOption()
+
+  const changeCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCountryValue = event.target.value
+    dispatch(selectCountry(selectedCountryValue))
+  }
+
+  const changeCity = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCityValue = event.target.value
+    dispatch(selectCity(selectedCityValue))
+  }
+
+  const changeUniversityType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedUniversityTypeValue = event.target.value
+    dispatch(selectUniversityType(selectedUniversityTypeValue))
+  }
+
+  const changeAccommodationOption = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedAccommodationOptionValue = event.target.value
+    dispatch(selectAccommodationPreference(selectedAccommodationOptionValue))
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="App">
         <CustomSelect
-          options={CountryListState}
-          type="country"
-          isDisabled={false}
-        />
+          options={countriesList}
+          handleChange={changeCountry}
+        ></CustomSelect>
         <CustomSelect
-          options={citiesListState}
-          type="city"
-          isDisabled={isDisabledCitiesStates}
-        />
+          options={CitiesList}
+          handleChange={changeCity}
+          isDisabled={isDisabledCity}
+        ></CustomSelect>
         <CustomSelect
-          options={universityTypeListState}
-          type="universityType"
-          isDisabled={isDisabledUniversityTypeState}
-        />
+          options={universityTypeList}
+          handleChange={changeUniversityType}
+          isDisabled={isDisabledUniversityType}
+        ></CustomSelect>
         <CustomSelect
-          options={accommodationPreferenceListState}
-          type="accommodationPreference"
-          isDisabled={isDisabledAccommodationPreferenceState}
-        />
-        <button disabled={isDisabledSubmitState}>Submit</button>
+          options={accommodationOptionList}
+          handleChange={changeAccommodationOption}
+          isDisabled={isActiveAccommodationOption}
+        ></CustomSelect>
       </div>
     </form>
   )
