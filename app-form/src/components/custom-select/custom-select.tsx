@@ -22,9 +22,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
   return (
     <div className="custom-select">
       <select value={value} onChange={onChange} disabled={disabled}>
-        <option value="" disabled hidden>
-          {placeholder}
-        </option>
+        <option value="">{placeholder}</option>
         {options.map((option) => (
           <option key={option.id} value={option.id}>
             {option.name}

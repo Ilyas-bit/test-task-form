@@ -15,16 +15,3 @@
   font-size: 16px;
   cursor: pointer;
 }
-
-.custom-select select option {
-  padding: 10px;
-}
-
-.custom-select select option:hover {
-  background-color: #666;
-}
-
-.custom-select select option:checked {
-  background-color: #007bff;
-  color: #fff;
-}
