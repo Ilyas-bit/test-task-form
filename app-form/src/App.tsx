@@ -11,25 +11,46 @@ import {
 
 import "./App.css"
 import SelectDropdown from "./components/custom-select/custom-select"
+import { findCityById, findHabitationTypeById } from "./alert/alert"
 
 function App(): JSX.Element {
   const dispatch = useDispatch()
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const message = `Вы выбрали: 
-    Страна: ${selectedCountry}, 
-    Город: ${selectedCity}, 
-    Тип ВУЗа: ${selectedUniversity}, 
-    Вариант проживания: ${selectedHabitation}`
-    alert(message)
-    dispatch(selectedCategories.clearSelectedCategories())
-  }
 
   const selectedCountry = useSelectedCategories.useSelectedCountry()
   const selectedCity = useSelectedCategories.useSelectedCity()
   const selectedUniversity = useSelectedCategories.useSelectedUniversity()
   const selectedHabitation = useSelectedCategories.useSelectedHabitation()
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const country = countriesData.find(
+      (country) => country.id === selectedCountry
+    )
+    let city
+    if (country) {
+      city = findCityById(country?.id, selectedCity, citiesData)
+    }
+    const university = universityData.find(
+      (university) => university.id === selectedUniversity
+    )
+    let habitation
+    if (country) {
+      habitation = findHabitationTypeById(
+        country?.id,
+        selectedHabitation,
+        habitationData
+      )
+    }
+
+    const message = `Вы выбрали: 
+  Страна: ${country?.name}, 
+  Город: ${city?.name}, 
+  Тип ВУЗа: ${university?.name}, 
+  Вариант проживания: ${habitation?.name}`
+    alert(message)
+    dispatch(selectedCategories.clearSelectedCategories())
+  }
 
   return (
     <div className="App">
