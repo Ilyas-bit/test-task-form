@@ -1,4 +1,5 @@
 import "./styles.css"
+
 interface Option {
   id: string
   name: string
@@ -20,7 +21,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
   placeholder,
 }) => {
   return (
-    <div className="custom-select">
+    <div className={`custom-select ${disabled ? "disabled" : ""}`}>
       <select value={value} onChange={onChange} disabled={disabled}>
         <option value="">{placeholder}</option>
         {options.map((option) => (

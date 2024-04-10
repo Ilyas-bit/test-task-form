@@ -54,3 +54,7 @@ button:not(:disabled):hover {
 button:active {
   background-color: #3d3d3d;
 }
+
+button.disabled {
+  cursor: not-allowed;
+}

@@ -72,7 +72,11 @@ function App(): JSX.Element {
             disabled={!selectedUniversity}
             placeholder="Выберите вариант проживания"
           />
-          <button disabled={!selectedHabitation} type="submit">
+          <button
+            disabled={!selectedHabitation}
+            type="submit"
+            className={`${!selectedHabitation ? "disabled" : ""}`}
+          >
             Отправить!
           </button>
         </div>
