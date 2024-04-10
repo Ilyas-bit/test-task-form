@@ -1,19 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { dataCountries } from "../../data/countries/countries"
 import { CountryState } from "../../interface/selected-categories/selected-categories"
 
 const initialState: CountryState = {
-  selectedCountry: "выберите страну",
-  selectedCountries: ["выберите страну", "Беларусь", "Россия"],
-  selectedCities: ["выберите город"],
-  selectedCity: "выберите город",
-  isActiveCity: true,
-  universityTypes: ["выберите вид ВУЗа", "ВУЗ", "Не интересует"],
-  selectedUniversityType: "выберите вид ВУЗа",
-  isActiveUniversityType: true,
-  selectedAccommodationOptions: ["выберите вариант проживания"],
-  selectedAccommodationOption: "выберите вариант проживания",
-  isActiveAccommodationOption: true,
+  selectedCountry: "",
+  selectedCity: "",
+  selectedUniversity: "",
+  selectedHabitation: "",
 }
 
 const selectedCategoriesStateSlice = createSlice({
@@ -22,53 +14,32 @@ const selectedCategoriesStateSlice = createSlice({
 
   reducers: {
     selectCountry: (state, action) => {
-      const selectedCountryValue = action.payload
-      state.selectedCountry = selectedCountryValue
-
-      // Находим нужный объект
-      const selectedCountryObject = dataCountries.find(
-        (option) => option.country === selectedCountryValue
-      )
-
-      if (selectedCountryObject) {
-        state.selectedCities = selectedCountryObject.cities
-        state.selectedAccommodationOptions =
-          selectedCountryObject.accommodationOptions
-        state.universityTypes = selectedCountryObject.universityType
-        state.isActiveCity = false
-      } else {
-        state.isActiveCity = true
-        state.isActiveUniversityType = true
-        state.isActiveAccommodationOption = true
-        state.selectedCities = ["выберите город"]
-        state.universityTypes = ["выберите тип ВУЗа"]
-        state.selectedAccommodationOptions = ["выберите вариант проживания"]
-      }
+      const countryId = action.payload
+      state.selectedCountry = countryId
+      state.selectedCity = ""
+      state.selectedUniversity = ""
+      state.selectedHabitation = ""
     },
     selectCity: (state, action) => {
-      state.selectedCity = action.payload
-      state.universityTypes = dataCountries[0].universityType
-      state.selectedAccommodationOptions = dataCountries[0].accommodationOptions
-      state.isActiveUniversityType = false
-      if (state.selectedCity === "выберите город") {
-        state.universityTypes = ["выберите вид ВУЗа"]
-        state.selectedAccommodationOptions = ["выберите вариант проживания"]
-        state.isActiveUniversityType = true
-        state.isActiveAccommodationOption = true
-      }
+      const cityId = action.payload
+      state.selectedCity = cityId
+      state.selectedUniversity = ""
+      state.selectedHabitation = ""
     },
-    selectUniversityType: (state, action) => {
-      state.selectedUniversityType = action.payload
-      state.selectedAccommodationOptions = dataCountries[0].accommodationOptions
-      state.isActiveAccommodationOption = false
-      if (state.selectedUniversityType === "выберите вид ВУЗа") {
-        state.selectedAccommodationOptions = ["выберите вариант проживания"]
-        state.isActiveAccommodationOption = true
-      }
+    selectUniversity: (state, action) => {
+      const universityId = action.payload
+      state.selectedUniversity = universityId
+      state.selectedHabitation = ""
     },
-    selectAccommodationPreference: (state, action) => {
-      state.selectedAccommodationOption = action.payload
-      state.isActiveAccommodationOption = false
+    selectHabitation: (state, action) => {
+      const habitationId = action.payload
+      state.selectedHabitation = habitationId
+    },
+    clearSelectedCategories: (state) => {
+      state.selectedCountry = ""
+      state.selectedCity = ""
+      state.selectedUniversity = ""
+      state.selectedHabitation = ""
     },
   },
 })
@@ -76,7 +47,8 @@ const selectedCategoriesStateSlice = createSlice({
 export const {
   selectCountry,
   selectCity,
-  selectUniversityType,
-  selectAccommodationPreference,
+  selectUniversity,
+  selectHabitation,
+  clearSelectedCategories,
 } = selectedCategoriesStateSlice.actions
 export default selectedCategoriesStateSlice.reducer

@@ -1,13 +1,6 @@
 export interface CountryState {
-  selectedCountry: string
-  selectedCountries: string[]
-  selectedCities: string[]
+  selectedCountry: "RU" | "BLR" | "Выберите страну" | ""
   selectedCity: string
-  isActiveCity: boolean
-  universityTypes: string[]
-  selectedUniversityType: string
-  isActiveUniversityType: boolean
-  selectedAccommodationOptions: string[]
-  selectedAccommodationOption: string
-  isActiveAccommodationOption: boolean
+  selectedUniversity: string
+  selectedHabitation: string
 }

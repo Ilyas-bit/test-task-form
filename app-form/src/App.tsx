@@ -1,89 +1,83 @@
-import "./App.css"
-import {
-  selectAccommodationPreference,
-  selectCity,
-  selectCountry,
-  selectUniversityType,
-} from "./state/selected-categories-slice/selected-categories-slice"
+import React from "react"
 import { useDispatch } from "react-redux"
-
-import { CustomSelect } from "./components/custom-select/custom-select"
+import * as selectedCategories from "./state/selected-categories-slice/selected-categories-slice"
+import * as useSelectedCategories from "./state/selected-categories-slice/selectors"
 import {
-  useAccommodationOptionList,
-  useCitiesList,
-  useCountriesList,
-  useIsActiveAccommodationOption,
-  useIsActiveCity,
-  useIsActiveUniversityTypeList,
-  useUniversityTypeList,
-} from "./state/selected-categories-slice/selectors"
+  countriesData,
+  citiesData,
+  universityData,
+  habitationData,
+} from "./data/countries/countries"
 
-function App() {
+import "./App.css"
+import SelectDropdown from "./components/custom-select/custom-select"
+
+function App(): JSX.Element {
   const dispatch = useDispatch()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    alert("Form submitted!")
+    const message = `Вы выбрали: 
+    Страна: ${selectedCountry}, 
+    Город: ${selectedCity}, 
+    Тип ВУЗа: ${selectedUniversity}, 
+    Вариант проживания: ${selectedHabitation}`
+    alert(message)
+    dispatch(selectedCategories.clearSelectedCategories())
   }
 
-  const countriesList = useCountriesList()
-  const CitiesList = useCitiesList()
-  const isDisabledCity = useIsActiveCity()
-
-  const universityTypeList = useUniversityTypeList()
-  const isDisabledUniversityType = useIsActiveUniversityTypeList()
-
-  const accommodationOptionList = useAccommodationOptionList()
-  const isActiveAccommodationOption = useIsActiveAccommodationOption()
-
-  const changeCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCountryValue = event.target.value
-    dispatch(selectCountry(selectedCountryValue))
-  }
-
-  const changeCity = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCityValue = event.target.value
-    dispatch(selectCity(selectedCityValue))
-  }
-
-  const changeUniversityType = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedUniversityTypeValue = event.target.value
-    dispatch(selectUniversityType(selectedUniversityTypeValue))
-  }
-
-  const changeAccommodationOption = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedAccommodationOptionValue = event.target.value
-    dispatch(selectAccommodationPreference(selectedAccommodationOptionValue))
-  }
+  const selectedCountry = useSelectedCategories.useSelectedCountry()
+  const selectedCity = useSelectedCategories.useSelectedCity()
+  const selectedUniversity = useSelectedCategories.useSelectedUniversity()
+  const selectedHabitation = useSelectedCategories.useSelectedHabitation()
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="App">
-        <CustomSelect
-          options={countriesList}
-          handleChange={changeCountry}
-        ></CustomSelect>
-        <CustomSelect
-          options={CitiesList}
-          handleChange={changeCity}
-          isDisabled={isDisabledCity}
-        ></CustomSelect>
-        <CustomSelect
-          options={universityTypeList}
-          handleChange={changeUniversityType}
-          isDisabled={isDisabledUniversityType}
-        ></CustomSelect>
-        <CustomSelect
-          options={accommodationOptionList}
-          handleChange={changeAccommodationOption}
-          isDisabled={isActiveAccommodationOption}
-        ></CustomSelect>
-      </div>
-    </form>
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <div className="container">
+          <SelectDropdown
+            options={countriesData}
+            value={selectedCountry}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              dispatch(selectedCategories.selectCountry(e.target.value))
+            }
+            disabled={false}
+            placeholder="Выберите страну"
+          />
+          <SelectDropdown
+            options={(selectedCountry && citiesData[selectedCountry]) || []}
+            value={selectedCity}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              dispatch(selectedCategories.selectCity(e.target.value))
+            }
+            disabled={!selectedCountry}
+            placeholder="Выберите город"
+          />
+
+          <SelectDropdown
+            options={universityData}
+            value={selectedUniversity}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              dispatch(selectedCategories.selectUniversity(e.target.value))
+            }
+            disabled={!selectedCity}
+            placeholder="Выберите тип вуза"
+          />
+          <SelectDropdown
+            options={(selectedCountry && habitationData[selectedCountry]) || []}
+            value={selectedHabitation}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              dispatch(selectedCategories.selectHabitation(e.target.value))
+            }
+            disabled={!selectedUniversity}
+            placeholder="Выберите вариант проживания"
+          />
+          <button disabled={!selectedHabitation} type="submit">
+            Отправить!
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }
 
